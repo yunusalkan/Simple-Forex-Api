@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+
+fx:
+  currency-layer:
+      root-url: http://api.currencylayer.com/live?access_key=abd20f580065bbdedecb03f57bfee8ba
+      list-url: http://api.currencylayer.com/list?access_key=abd20f580065bbdedecb03f57bfee8ba
+
+api:
+  version: 1.0.0
+  title: Simple Forex API
+  description: A Simple foreign exchange api which can be used for financial applications
+  license: GNU Licence
+  contact:
+    name: Yunus Alkan
+    url: https://github.com/yunusalkan
+    email: yunusalkan25@gmail.com
+  conversion-controller:
+    get-exchange-rate:
+      description: Retrieves exchange rate for two currency pair
+      notes: |
+        # Normal Response
+        Due to service provider limitations, USD may be used as the source currency. 
+        Inputs:
+        sourceCurrency=USD;
+        targetCurrency=Any real foreign currency code
+        Response: Exchange Rate
+    convert-currency-pair:
+      description: Convert currency value from source to target currency with given value
+      notes: |
+        # Normal Response
+        Due to service provider limitations, USD may be used as the source currency.
+        Inputs:
+        sourceCurrency=USD;
+        targetCurrency=Any real foreign currency code
+        sourceAmount=Given source currency amount
+        Response:
+          Target currency amount value
+          TransactionId
+    get-conversion-list:
+      description: Retrieves conversion list
+      notes: |
+        # Normal Response
+        Gets conversion list by transactionId or transactionDate
+        Inputs:
+        transactionId is a type  UUID stands for Universally Unique Identifier (3a703217-a2bc-5b1c-b7f3-9bfa9f3c1b89)
+        transactionDate is transaction of date like 2023-08-27
+        page and limit parameters is optional for paging. Default values for page=0 limit=5
+  response-codes:
+    wrong-currency-type: -Entered Currency Type- currency type is not listed
+    exchange-service-exception: Service provider exception message
+    invalid-input-exception: transactionId or transactionDate parameter must be filled!
+
